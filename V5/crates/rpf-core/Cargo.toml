@@ -1,0 +1,6 @@
+[package]
+name = "rpf-core"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "Clean-room RPF7 archive index parser with strict limits (no dependencies)."
