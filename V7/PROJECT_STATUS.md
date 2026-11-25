@@ -1,0 +1,2 @@
+## Update 2026-11-25 (twelfth account): M8a texture editor built (verbatim ytd.rs + doku.rs; list, preview, PNG/DDS export, replace with image, recolor; works on .ytd and textures embedded in .ydr/.ydd/.yft/.ypt). Queued edits now stack (base_blob) in texture, visualsettings and particle panels. run-all-checks.sh ALL PASSED; real core.ypt listed 106 textures. Add/delete/rescale textures NOT done. See NEXT_SESSION_PROMPT.md.
+
