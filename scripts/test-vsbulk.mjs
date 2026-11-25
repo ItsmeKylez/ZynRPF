@@ -1,0 +1,24 @@
+// Unit tests for the visualsettings.dat helpers. Run: node scripts/test-vsbulk.mjs
+import assert from "node:assert/strict";
+import { changeLines, fromHex, formatNum, matchesPreset, moveHue, numRange, parseNum, PRESETS, tintColours, toHex } from "../web/src/vsbulk.ts";
+assert.equal(parseNum("750.0f"), 750);
+assert.equal(formatNum(0.123456, false), "0.1235");
+assert.equal(formatNum(127.6, true), "128");
+assert.equal(toHex(fromHex("#e5243b")), "#e5243b");
+assert.equal(changeLines(new Map([["a.b", "1"], ["c", "2.5"]])), "a.b\t1\nc\t2.5");
+assert.ok(matchesPreset(PRESETS.find((p) => p.id === "damage"), "misc.damageoverlay.Duration"));
+assert.ok(!matchesPreset(PRESETS.find((p) => p.id === "damage"), "sky.sun.r"));
+const [r, g, b] = moveHue([200, 100, 100], [0, 255, 0]);
+assert.ok(g > r && g > b, "hue moves toward green");
+const out = new Map();
+const cols = [{ keys: ["c.red", "c.green", "c.blue"], scale: 255 }, { keys: ["s.r", "s.g", "s.b"], scale: 1 }];
+const vals = { "c.red": "255", "c.green": "0", "c.blue": "0", "s.r": "1", "s.g": "0", "s.b": "0" };
+assert.equal(tintColours(cols, (k) => vals[k], [0, 255, 0], 1, out), 2);
+assert.ok(Number(out.get("c.green")) > Number(out.get("c.red")), "255-scale triple turns green");
+assert.ok(Number(out.get("s.g")) > Number(out.get("s.r")) && Number(out.get("s.g")) <= 1, "0-1 scale triple turns green and stays in range");
+const none = new Map();
+tintColours(cols, (k) => vals[k], [0, 255, 0], 0, none);
+assert.equal(none.get("c.red"), "255", "strength 0 changes nothing");
+assert.deepEqual(numRange("misc.x.Duration", 750), [0, 2250]);
+assert.deepEqual(numRange("a.enabled", 1), [0, 1]);
+console.log("vsbulk: all passed");
