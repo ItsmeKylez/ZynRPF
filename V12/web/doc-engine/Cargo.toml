@@ -1,0 +1,12 @@
+[package]
+name = "zyn-doc-engine"
+version = "0.1.0"
+edition = "2024"
+description = "Tauri-free document layer for the Zyn-RPF web backend (M2 vertical slice: open, tree, read, save+verify)"
+license = "GPL-3.0-only"
+publish = false
+
+[dependencies]
+tlk-rpf-core = { path = "../../core" }
+serde = { version = "1", features = ["derive"] }
+zip = { version = "9.8.2", default-features = false, features = ["deflate"] }

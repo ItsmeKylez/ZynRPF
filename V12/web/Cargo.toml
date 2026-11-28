@@ -1,0 +1,11 @@
+# Separate workspace on purpose: the desktop workspace (../Cargo.toml) and its Cargo.lock stay untouched.
+# STATUS (M2): doc-engine is uncompiled by cargo (no crate cache). server currently has std-only config+store, tested with plain rustc.
+[workspace]
+resolver = "3"
+members = ["doc-engine", "server"]
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = true
+panic = "unwind"
